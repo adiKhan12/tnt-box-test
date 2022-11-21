@@ -22,7 +22,7 @@ def docker_test():
         if container_status == RUNNING:
             print('Container ' + container + ' is running')
         else:
-            print('Container ' + container+ ' is not running')
+            print('Container ' + container + ' is not running')
     return 
 
 
