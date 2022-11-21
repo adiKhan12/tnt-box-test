@@ -12,6 +12,7 @@ def docker_test():
     # Containers names that should be tested if running
     TNT_BOX_CONTAINERS = ['tntnbox_configuration_app', 'chronograf', 'influxdb', 'telegraf', 'revproxy', 'telepresence']
     RUNNING = 'running'
+    TEST_PASS = False
 
     for container in TNT_BOX_CONTAINERS:
         # Get container
@@ -20,11 +21,17 @@ def docker_test():
         container_status = container.status
         # Check if container is running
         if container_status == RUNNING:
-            print(f'Container {container} is running')
+            TEST_PASS = True
         else:
-            print(f'Container  {container} is not running')
+            TEST_PASS = False
+            break
+    if TEST_PASS == True:
+        print('TEST PASSED: All docker containers are runnig...')
+    else:
+        print('TEST FAILED: Some Docker COntainers are not running')
     return 
 
+print('             ......TNT-BOX TESTING......             ')
 
 docker_test()
 
