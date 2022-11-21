@@ -3,14 +3,29 @@
 import docker
 import sys
 
-# Get list of containers
-client = docker.from_env()
 
-# Get Container Names only
-containers = client.containers.list()
+def docker_test():
+    # Test 1 - Check if Docker Container is running
+    # Get list of containers
+    client = docker.from_env()
 
-# Get Container Names only
-container_names = [container.name for container in containers]
+    # Containers names that should be tested if running
+    TNT_BOX_CONTAINERS = ['tntnbox_configuration_app', 'chronograf', 'influxdb', 'telegraf', 'revproxy', 'telepresence']
+    RUNNING = 'running'
 
-# Display Container Names
-print("Container Names: ", container_names)
+    for container in TNT_BOX_CONTAINERS:
+        # Get container
+        container = client.containers.get(container)
+        # Get container status
+        container_status = container.status
+        # Check if container is running
+        if container_status == RUNNING:
+            print('Container ' + container + ' is running')
+        else:
+            print('Container ' + container+ ' is not running')
+    return 
+
+
+docker_test()
+
+
